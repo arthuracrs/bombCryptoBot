@@ -13,12 +13,14 @@ pyautogui.PAUSE = 1
 
 last_work = datetime.datetime.now()
 last_idle_move = datetime.datetime.now()
+
 state = 'disconnected'
+lastState = state
 connected = ''
 loggedIn = True
 
 restTime = 30 * 60
-idleMovementTimer = 4 * 60
+idleMovementTimer = 1 * 35
 
 clearPrint("It's on baby!")
 
@@ -134,11 +136,11 @@ def goTreasureHunt(currentState):
 
 def idleMovement(currentState):
     global last_idle_move
-    idle_target_im1 = pyautogui.locateCenterOnScreen('chest.png')
+    idle_target_im1 = pyautogui.locateCenterOnScreen('chest.png', confidence=0.8)
     if idle_target_im1 != None:
         customClick(idle_target_im1)
         time.sleep(random.randint(1,9))
-        idle_target_2_im1 = pyautogui.locateCenterOnScreen('close_chest.png')
+        idle_target_2_im1 = pyautogui.locateCenterOnScreen('close_chest.png', confidence=0.8)
         if idle_target_2_im1 != None:
             customClick(idle_target_2_im1)
         
@@ -172,11 +174,14 @@ def checkIfDisconnected():
             state = 'to_re_asign'
 
 while 1:
-    print(state)
+    if lastState != state:
+        print('%s ||    %s' % (datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), state))
 #     clearPrint('''LoggedIn: %r
 # Atividade Atual: %s
 # Proximo movimento de presença: %ds
 # Fim do descanço em: %dm''' % (loggedIn, state,  idleMovementTimer - (datetime.datetime.now() - last_idle_move).seconds, (restTime - (datetime.datetime.now() - last_work).seconds)/ 60))
+    
+    lastState = state
 
     if state == 'disconnected':
         state = connectWallet(state)
