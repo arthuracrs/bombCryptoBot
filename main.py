@@ -17,6 +17,9 @@ state = 'disconnected'
 connected = ''
 loggedIn = True
 
+restTime = 30 * 60
+idleMovementTimer = 4 * 60
+
 clearPrint("It's on baby!")
 
 while connected != 's':
@@ -135,7 +138,7 @@ def idleMovement(currentState):
     if idle_target_im1 != None:
         customClick(idle_target_im1)
         time.sleep(random.randint(1,9))
-        idle_target_2_im1 = pyautogui.locateCenterOnScreen('close.png')
+        idle_target_2_im1 = pyautogui.locateCenterOnScreen('close_chest.png')
         if idle_target_2_im1 != None:
             customClick(idle_target_2_im1)
         
@@ -173,7 +176,7 @@ while 1:
 #     clearPrint('''LoggedIn: %r
 # Atividade Atual: %s
 # Proximo movimento de presença: %ds
-# Fim do descanço em: %dm''' % (loggedIn, state, 1 * 60 - (datetime.datetime.now() - last_idle_move).seconds, (45 * 60 - (datetime.datetime.now() - last_work).seconds)/ 60))
+# Fim do descanço em: %dm''' % (loggedIn, state,  idleMovementTimer - (datetime.datetime.now() - last_idle_move).seconds, (restTime - (datetime.datetime.now() - last_work).seconds)/ 60))
 
     if state == 'disconnected':
         state = connectWallet(state)
@@ -205,10 +208,10 @@ while 1:
     elif state == 'idle_move':
         state = idleMovement(state)
     
-    elif state == 'farming' and (datetime.datetime.now() - last_work).seconds > 45 * 60:
+    elif state == 'farming' and (datetime.datetime.now() - last_work).seconds > restTime:
         state = 'back_menu'
 
-    elif state == 'farming' and (datetime.datetime.now() - last_idle_move).seconds > 5 * 60:
+    elif state == 'farming' and (datetime.datetime.now() - last_idle_move).seconds > idleMovementTimer:
         state = 'idle_move'
 
     checkIfDisconnected()
