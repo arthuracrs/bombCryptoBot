@@ -25,7 +25,6 @@ logFile = open(
 logs = []
 
 
-
 state = 'disconnected'
 lastState = state
 connected = ''
@@ -131,12 +130,14 @@ def putAllHeroesToWork(currentState):
         all_on_im1 = pyautogui.locateCenterOnScreen(
             'all_on.png', confidence=0.8)
         customClick(all_on_im1)
+        last_work = datetime.datetime.now()
         return 'to_close'
 
     elif pyautogui.locateOnScreen('all_work_again.png') != None:
         all_work_again_im1 = pyautogui.locateCenterOnScreen(
             'all_work_again.png')
         customClick(all_work_again_im1)
+        last_work = datetime.datetime.now()
         return 'to_close'
 
     else:
@@ -209,6 +210,12 @@ def checkIfDisconnected():
             state = 'to_re_asign'
 
 
+def saveLogs():
+    for x in logs:
+        logFile.write(x)
+        logFile.close()
+
+
 while 1:
     log = '%s ||    %s' % (
         datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), state)
@@ -266,6 +273,4 @@ while 1:
     checkIfDisconnected()
     # time.sleep(1)
 
-for x in logs:
-    logFile.write(x)
-logFile.close()
+saveLogs()
