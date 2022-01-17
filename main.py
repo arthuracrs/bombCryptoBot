@@ -21,9 +21,10 @@ if not os.path.exists(directory):
     os.makedirs(directory)
 
 logFile = open(
-    directory + "/log-"+datetime.datetime.now().strftime("%Y-%m-%d %H.%M.%S")+".txt", "x")
+    directory + "/log-"+datetime.datetime.now().strftime("%Y-%m-%d--%H.%M.%S")+".txt", "x")
 logs = []
 
+assetsPath = './assets/'
 
 state = 'disconnected'
 lastState = state
@@ -57,14 +58,14 @@ def customClick(coords):
 def connectWallet(currentState):
     global loggedIn
     connect_wallet_im1 = pyautogui.locateCenterOnScreen(
-        'connect_wallet_01.png', confidence=0.7)
+        assetsPath + 'connect_wallet_01.png', confidence=0.7)
     if connect_wallet_im1 != None:
         customClick(connect_wallet_im1)
         return 'to_asign'
 
     else:
         connect_wallet_im2 = pyautogui.locateCenterOnScreen(
-            'connect_wallet_02.png', confidence=0.7)
+           assetsPath +  'connect_wallet_02.png', confidence=0.7)
         if connect_wallet_im2 != None:
             customClick(connect_wallet_im2)
             return 'to_asign'
@@ -74,7 +75,7 @@ def connectWallet(currentState):
 
 def asign(currentState):
     global loggedIn
-    asign_im1 = pyautogui.locateCenterOnScreen('assinar.png', confidence=0.8)
+    asign_im1 = pyautogui.locateCenterOnScreen(assetsPath + 'assinar.png', confidence=0.8)
     if asign_im1 != None:
         customClick(asign_im1)
         loggedIn = True
@@ -86,12 +87,12 @@ def asign(currentState):
 def reAsign(currentState):
     global loggedIn
     global state
-    menu_im = pyautogui.locateCenterOnScreen('menu.png', confidence=0.8)
+    menu_im = pyautogui.locateCenterOnScreen(assetsPath + 'menu.png', confidence=0.8)
     if menu_im != None:
         print('olhau')
         state = 'to_heroes'
         return 'to_heroes'
-    asign_im1 = pyautogui.locateCenterOnScreen('assinar.png', confidence=0.8)
+    asign_im1 = pyautogui.locateCenterOnScreen(assetsPath + 'assinar.png', confidence=0.8)
     if asign_im1 != None:
         print('reasinou')
         customClick(asign_im1)
@@ -103,7 +104,7 @@ def reAsign(currentState):
 
 def expandGameWindow(currentState):
     expand_game_Window_im1 = pyautogui.locateCenterOnScreen(
-        'expan_game.png', confidence=0.8)
+        assetsPath + 'expan_game.png', confidence=0.8)
     if expand_game_Window_im1 != None:
         customClick(expand_game_Window_im1)
         return 'to_heroes'
@@ -111,7 +112,7 @@ def expandGameWindow(currentState):
 
 
 def openHeroesWindow(currentState):
-    heroes_im1 = pyautogui.locateCenterOnScreen('heroes.png', confidence=0.8)
+    heroes_im1 = pyautogui.locateCenterOnScreen(assetsPath + 'heroes.png', confidence=0.8)
     if heroes_im1 != None:
         customClick(heroes_im1)
         return 'to_all_work'
@@ -119,7 +120,7 @@ def openHeroesWindow(currentState):
 
 
 def closeHeroesWindow(currentState):
-    close_im1 = pyautogui.locateCenterOnScreen('close.png', confidence=0.7)
+    close_im1 = pyautogui.locateCenterOnScreen(assetsPath + 'close.png', confidence=0.7)
     if close_im1 != None:
         customClick(close_im1)
         return 'to_treasure_hunt'
@@ -127,16 +128,17 @@ def closeHeroesWindow(currentState):
 
 
 def putAllHeroesToWork(currentState):
-    if pyautogui.locateOnScreen('all_on.png') != None:
+    global last_work
+    if pyautogui.locateOnScreen(assetsPath + 'all_on.png') != None:
         all_on_im1 = pyautogui.locateCenterOnScreen(
-            'all_on.png', confidence=0.8)
+            assetsPath + 'all_on.png', confidence=0.8)
         customClick(all_on_im1)
         last_work = datetime.datetime.now()
         return 'to_close'
 
-    elif pyautogui.locateOnScreen('all_work_again.png') != None:
+    elif pyautogui.locateOnScreen(assetsPath + 'all_work_again.png') != None:
         all_work_again_im1 = pyautogui.locateCenterOnScreen(
-            'all_work_again.png')
+            assetsPath + 'all_work_again.png')
         customClick(all_work_again_im1)
         last_work = datetime.datetime.now()
         return 'to_close'
@@ -150,7 +152,7 @@ def putAllHeroesToWork(currentState):
 
 def backToMenu(currentState):
     back_menu_im1 = pyautogui.locateCenterOnScreen(
-        'back_menu.png', confidence=0.8)
+        assetsPath + 'back_menu.png', confidence=0.8)
     if back_menu_im1 != None:
         customClick(back_menu_im1)
         return 'to_heroes'
@@ -159,28 +161,38 @@ def backToMenu(currentState):
 
 def goTreasureHunt(currentState):
     treasure_hunt_im1 = pyautogui.locateCenterOnScreen(
-        'treasure_hunt.png', confidence=0.8)
+        assetsPath + 'treasure_hunt.png', confidence=0.8)
     if treasure_hunt_im1 != None:
         customClick(treasure_hunt_im1)
         return 'farming'
     return currentState
 
 
-def idleMovement(currentState):
+def idleMove1(currentState):
     global last_idle_move
+   
     idle_target_im1 = pyautogui.locateCenterOnScreen(
-        'chest.png', confidence=0.8)
+        assetsPath + 'chest.png', confidence=0.8)
     if idle_target_im1 != None:
         customClick(idle_target_im1)
-        time.sleep(random.randint(1, 9))
-        idle_target_2_im1 = pyautogui.locateCenterOnScreen(
-            'close_chest.png', confidence=0.8)
-        if idle_target_2_im1 != None:
-            customClick(idle_target_2_im1)
+        time.sleep(random.randint(1, 9))        
+        last_idle_move = datetime.datetime.now()
 
-            last_idle_move = datetime.datetime.now()
+        return 'idle_move2'
+    return currentState
 
-            return 'farming'
+
+def idleMove2(currentState):
+    global last_idle_move
+    
+    idle_target_2_im1 = pyautogui.locateCenterOnScreen(
+        assetsPath + 'close_chest.png', confidence=0.8)
+    if idle_target_2_im1 != None:
+        customClick(idle_target_2_im1)
+
+        last_idle_move = datetime.datetime.now()
+
+        return 'farming'
     return currentState
 
 
@@ -188,19 +200,19 @@ def checkIfDisconnected():
     global state
     global loggedIn
 
-    if pyautogui.locateOnScreen('login_expired.png', confidence=0.8) != None:
-        ok_im1 = pyautogui.locateCenterOnScreen('ok.png', confidence=0.8)
+    if pyautogui.locateOnScreen(assetsPath + 'login_expired.png', confidence=0.8) != None:
+        ok_im1 = pyautogui.locateCenterOnScreen(assetsPath + 'ok.png', confidence=0.8)
         if ok_im1 != None:
             customClick(ok_im1)
             state = 'disconnected'
 
-        ok_im2 = pyautogui.locateCenterOnScreen('ok2.png', confidence=0.8)
+        ok_im2 = pyautogui.locateCenterOnScreen(assetsPath + 'ok2.png', confidence=0.8)
         if ok_im2 != None:
             customClick(ok_im2)
             state = 'disconnected'
     elif loggedIn:
         connect_wallet_02_im = pyautogui.locateCenterOnScreen(
-            'connect_wallet_02.png', confidence=0.8)
+            assetsPath + 'connect_wallet_02.png', confidence=0.8)
         if connect_wallet_02_im != None:
             print('deu ruim')
             loggedIn = False
@@ -219,7 +231,7 @@ def saveLogs():
 
 while 1:
     log = '%s ||    %s' % (
-        datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), state)
+        datetime.datetime.now().strftime("%Y-%m-%d--%H:%M:%S"), state)
     if lastState != state:
         print(log)
         logs.append(log)
@@ -262,8 +274,11 @@ while 1:
     elif state == 'back_menu':
         state = backToMenu(state)
 
-    elif state == 'idle_move':
-        state = idleMovement(state)
+    elif state == 'idle_move1':
+        state = idleMove1(state)
+
+    elif state == 'idle_move2':
+        state = idleMove2(state)
 
     elif state == 'farming' and (datetime.datetime.now() - last_work).seconds > restTime:
         state = 'back_menu'
