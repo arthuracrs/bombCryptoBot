@@ -27,7 +27,7 @@ assetsPath = './assets/'
 state = 'disconnected'
 lastState = state
 connected = ''
-loggedIn = True
+loggedIn = False
 
 restTime = 1 * 60 + random.randint(1, 9)
 idleMovementTimer = 4 * 60 + random.randint(1, 9)
@@ -246,9 +246,7 @@ while 1:
     lastState = state
 
     if keyboard.is_pressed('q') and keyboard.is_pressed('ctrl'):
-        print('Arquivo de log gerado')
-
-        break  # finishing the loop
+        break 
 
     if state == 'disconnected':
         state = connectWallet(state)
