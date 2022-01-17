@@ -20,8 +20,6 @@ directory = './logs'
 if not os.path.exists(directory):
     os.makedirs(directory)
 
-logFile = open(
-    directory + "/log-"+datetime.datetime.now().strftime("%Y-%m-%d--%H.%M.%S")+".txt", "x")
 logs = []
 
 assetsPath = './assets/'
@@ -31,7 +29,7 @@ lastState = state
 connected = ''
 loggedIn = True
 
-restTime = 30 * 60 + random.randint(1, 9)
+restTime = 1 * 60 + random.randint(1, 9)
 idleMovementTimer = 4 * 60 + random.randint(1, 9)
 
 clearPrint("It's on baby!")
@@ -132,6 +130,7 @@ def putAllHeroesToWork(currentState):
     if pyautogui.locateOnScreen(assetsPath + 'all_on.png') != None:
         all_on_im1 = pyautogui.locateCenterOnScreen(
             assetsPath + 'all_on.png', confidence=0.8)
+        time.sleep(1)
         customClick(all_on_im1)
         last_work = datetime.datetime.now()
         return 'to_close'
@@ -139,6 +138,7 @@ def putAllHeroesToWork(currentState):
     elif pyautogui.locateOnScreen(assetsPath + 'all_work_again.png') != None:
         all_work_again_im1 = pyautogui.locateCenterOnScreen(
             assetsPath + 'all_work_again.png')
+        time.sleep(1)
         customClick(all_work_again_im1)
         last_work = datetime.datetime.now()
         return 'to_close'
@@ -224,9 +224,12 @@ def checkIfDisconnected():
 
 
 def saveLogs():
+    logFile = open(
+    directory + "/log-"+datetime.datetime.now().strftime("%Y-%m-%d--%H.%M.%S")+".txt", "x")
     for x in logs:
         logFile.write(x)
-        logFile.close()
+        logFile.write('\n')
+    logFile.close()
 
 
 while 1:
