@@ -50,7 +50,8 @@ while connected != 's':
 
 def customClick(coords):
     pyautogui.moveTo(coords.x, coords.y, 1)
-    pyautogui.click(clicks=2, interval=0.25)
+    # pyautogui.click(clicks=2, interval=0.25)
+    pyautogui.click()
 
 
 def connectWallet(currentState):
