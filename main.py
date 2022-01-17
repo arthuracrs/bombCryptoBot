@@ -19,8 +19,8 @@ lastState = state
 connected = ''
 loggedIn = True
 
-restTime = 30 * 60
-idleMovementTimer = 1 * 35
+restTime = 30 * 60 + random.randint(1,9)
+idleMovementTimer = 4 * 60 + random.randint(1,9)
 
 clearPrint("It's on baby!")
 
@@ -168,6 +168,7 @@ def checkIfDisconnected():
         if connect_wallet_02_im != None:
             print('deu ruim')
             loggedIn = False
+            time.sleep(1)
             customClick(connect_wallet_02_im)
             pyautogui.click()
             time.sleep(10)
