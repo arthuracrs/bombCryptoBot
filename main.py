@@ -246,7 +246,7 @@ while 1:
     lastState = state
 
     if keyboard.is_pressed('q') and keyboard.is_pressed('ctrl'):
-        print('You Pressed A Key!')
+        print('Arquivo de log gerado')
 
         break  # finishing the loop
 
