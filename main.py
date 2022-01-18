@@ -10,6 +10,7 @@ import json
 configFile = json.load(open('./config.json'))
 assetsPath = configFile['assetsPath']
 
+
 def clearPrint(text):
     os.system('cls')
     print(text)
@@ -65,7 +66,7 @@ def connectWallet(currentState):
 
     else:
         connect_wallet_im2 = pyautogui.locateCenterOnScreen(
-           assetsPath +  'connect_wallet_02.png', confidence=0.7)
+            assetsPath + 'connect_wallet_02.png', confidence=0.7)
         if connect_wallet_im2 != None:
             customClick(connect_wallet_im2)
             return 'to_asign'
@@ -75,7 +76,8 @@ def connectWallet(currentState):
 
 def asign(currentState):
     global loggedIn
-    asign_im1 = pyautogui.locateCenterOnScreen(assetsPath + 'assinar.png', confidence=0.8)
+    asign_im1 = pyautogui.locateCenterOnScreen(
+        assetsPath + 'assinar.png', confidence=0.8)
     if asign_im1 != None:
         customClick(asign_im1)
         loggedIn = True
@@ -87,12 +89,14 @@ def asign(currentState):
 def reAsign(currentState):
     global loggedIn
     global state
-    menu_im = pyautogui.locateCenterOnScreen(assetsPath + 'menu.png', confidence=0.8)
+    menu_im = pyautogui.locateCenterOnScreen(
+        assetsPath + 'menu.png', confidence=0.8)
     if menu_im != None:
         print('olhau')
         state = 'to_heroes'
         return 'to_heroes'
-    asign_im1 = pyautogui.locateCenterOnScreen(assetsPath + 'assinar.png', confidence=0.8)
+    asign_im1 = pyautogui.locateCenterOnScreen(
+        assetsPath + 'assinar.png', confidence=0.8)
     if asign_im1 != None:
         print('reasinou')
         customClick(asign_im1)
@@ -112,7 +116,8 @@ def expandGameWindow(currentState):
 
 
 def openHeroesWindow(currentState):
-    heroes_im1 = pyautogui.locateCenterOnScreen(assetsPath + 'heroes.png', confidence=0.8)
+    heroes_im1 = pyautogui.locateCenterOnScreen(
+        assetsPath + 'heroes.png', confidence=0.8)
     if heroes_im1 != None:
         customClick(heroes_im1)
         return 'to_all_work'
@@ -120,7 +125,8 @@ def openHeroesWindow(currentState):
 
 
 def closeHeroesWindow(currentState):
-    close_im1 = pyautogui.locateCenterOnScreen(assetsPath + 'close.png', confidence=0.7)
+    close_im1 = pyautogui.locateCenterOnScreen(
+        assetsPath + 'close.png', confidence=0.7)
     if close_im1 != None:
         customClick(close_im1)
         return 'to_treasure_hunt'
@@ -172,12 +178,12 @@ def goTreasureHunt(currentState):
 
 def idleMove1(currentState):
     global last_idle_move
-   
+
     idle_target_im1 = pyautogui.locateCenterOnScreen(
         assetsPath + 'chest.png', confidence=0.8)
     if idle_target_im1 != None:
         customClick(idle_target_im1)
-        time.sleep(random.randint(1, 9))        
+        time.sleep(random.randint(1, 9))
         last_idle_move = datetime.datetime.now()
 
         return 'idle_move2'
@@ -186,7 +192,7 @@ def idleMove1(currentState):
 
 def idleMove2(currentState):
     global last_idle_move
-    
+
     idle_target_2_im1 = pyautogui.locateCenterOnScreen(
         assetsPath + 'close_chest.png', confidence=0.8)
     if idle_target_2_im1 != None:
@@ -203,12 +209,14 @@ def checkIfDisconnected():
     global loggedIn
 
     if pyautogui.locateOnScreen(assetsPath + 'login_expired.png', confidence=0.8) != None:
-        ok_im1 = pyautogui.locateCenterOnScreen(assetsPath + 'ok.png', confidence=0.8)
+        ok_im1 = pyautogui.locateCenterOnScreen(
+            assetsPath + 'ok.png', confidence=0.8)
         if ok_im1 != None:
             customClick(ok_im1)
             state = 'disconnected'
 
-        ok_im2 = pyautogui.locateCenterOnScreen(assetsPath + 'ok2.png', confidence=0.8)
+        ok_im2 = pyautogui.locateCenterOnScreen(
+            assetsPath + 'ok2.png', confidence=0.8)
         if ok_im2 != None:
             customClick(ok_im2)
             state = 'disconnected'
@@ -227,69 +235,71 @@ def checkIfDisconnected():
 
 def saveLogs():
     logFile = open(
-    logsPath + "/log-"+datetime.datetime.now().strftime("%Y-%m-%d--%H.%M.%S")+".txt", "x")
+        logsPath + "/log-"+datetime.datetime.now().strftime("%Y-%m-%d--%H.%M.%S")+".txt", "x")
     for x in logs:
         logFile.write(x)
         logFile.write('\n')
     logFile.close()
 
 
-while 1:
-    log = '%s ||    %s' % (
-        datetime.datetime.now().strftime("%Y-%m-%d--%H:%M:%S"), state)
-    if lastState != state:
-        print(log)
-        logs.append(log)
-#     clearPrint('''LoggedIn: %r
-# Atividade Atual: %s
-# Proximo movimento de presença: %ds
-# Fim do descanço em: %dm''' % (loggedIn, state,  idleMovementTimer - (datetime.datetime.now() - last_idle_move).seconds, (restTime - (datetime.datetime.now() - last_work).seconds)/ 60))
+try:
+    while 1:
+        log = '%s ||    %s' % (
+            datetime.datetime.now().strftime("%Y-%m-%d--%H:%M:%S"), state)
+        if lastState != state:
+            print(log)
+            logs.append(log)
+        #     clearPrint('''LoggedIn: %r
+        # Atividade Atual: %s
+        # Proximo movimento de presença: %ds
+        # Fim do descanço em: %dm''' % (loggedIn, state,  idleMovementTimer - (datetime.datetime.now() - last_idle_move).seconds, (restTime - (datetime.datetime.now() - last_work).seconds)/ 60))
 
-    lastState = state
+        lastState = state
 
-    if keyboard.is_pressed('q') and keyboard.is_pressed('ctrl'):
-        break 
+        if keyboard.is_pressed('q') and keyboard.is_pressed('ctrl'):
+            break
 
-    if state == 'disconnected':
-        state = connectWallet(state)
+        if state == 'disconnected':
+            state = connectWallet(state)
 
-    elif state == 'to_asign':
-        state = asign(state)
+        elif state == 'to_asign':
+            state = asign(state)
 
-    elif state == "to_re_asign":
-        state == reAsign(state)
+        elif state == "to_re_asign":
+            state == reAsign(state)
 
-    elif state == 'to_expan':
-        state = expandGameWindow(state)
+        elif state == 'to_expan':
+            state = expandGameWindow(state)
 
-    elif state == 'to_heroes':
-        state = openHeroesWindow(state)
+        elif state == 'to_heroes':
+            state = openHeroesWindow(state)
 
-    elif state == 'to_all_work':
-        state = putAllHeroesToWork(state)
+        elif state == 'to_all_work':
+            state = putAllHeroesToWork(state)
 
-    elif state == 'to_close':
-        state = closeHeroesWindow(state)
+        elif state == 'to_close':
+            state = closeHeroesWindow(state)
 
-    elif state == 'to_treasure_hunt':
-        state = goTreasureHunt(state)
+        elif state == 'to_treasure_hunt':
+            state = goTreasureHunt(state)
 
-    elif state == 'back_menu':
-        state = backToMenu(state)
+        elif state == 'back_menu':
+            state = backToMenu(state)
 
-    elif state == 'idle_move1':
-        state = idleMove1(state)
+        elif state == 'idle_move1':
+            state = idleMove1(state)
 
-    elif state == 'idle_move2':
-        state = idleMove2(state)
+        elif state == 'idle_move2':
+            state = idleMove2(state)
 
-    elif state == 'farming' and (datetime.datetime.now() - last_work).seconds > restTime:
-        state = 'back_menu'
+        elif state == 'farming' and (datetime.datetime.now() - last_work).seconds > restTime:
+            state = 'back_menu'
 
-    elif state == 'farming' and (datetime.datetime.now() - last_idle_move).seconds > idleMovementTimer:
-        state = 'idle_move'
+        elif state == 'farming' and (datetime.datetime.now() - last_idle_move).seconds > idleMovementTimer:
+            state = 'idle_move'
 
-    checkIfDisconnected()
-    # time.sleep(1)
+        checkIfDisconnected()
+        # time.sleep(1)
+except:
+    saveLogs()
 
-saveLogs()
