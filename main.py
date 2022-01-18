@@ -153,6 +153,7 @@ def putAllHeroesToWork(currentState):
 
     else:
         print('vazei')
+        last_work = datetime.datetime.now()
         return 'to_close'
 
     return currentState
@@ -252,7 +253,12 @@ try:
             logs.append(log)
 
         if configFile["logMode"] != 'debug':
-            clearPrint('Atividade Atual: %s\nProximo movimento de presença: %ss\nFim do descanço em: %dm' % (state,  idleMoveTimer - (datetime.datetime.now() - last_idle_move).seconds, (restTime - (datetime.datetime.now() - last_work).seconds)/ 60))    
+            clearPrint('Atividade Atual: %s\nProximo movimento de presença: %ss\nFim do descanço em: %dm e %ds' %
+                       (state,  
+                       idleMoveTimer - (datetime.datetime.now() - last_idle_move).seconds, 
+                       (restTime - (datetime.datetime.now() - last_work).seconds) / 60,
+                       (restTime - (datetime.datetime.now() - last_work).seconds) % 60
+            ))
 
         lastState = state
 
@@ -299,6 +305,8 @@ try:
             state = 'idle_move1'
 
         checkIfDisconnected()
-except:
-    saveLogs()
+        time.sleep(int(configFile['cicleTime']))
 
+except Exception as e:
+    print(e)
+    saveLogs()

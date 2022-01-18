@@ -3,5 +3,6 @@
     "logsPath": "./logs",
     "restTime": "40",
     "idleMoveTimer": "4",
-    "logMode": "debugs"
+    "logMode": "debugs",
+    "cicleTime": "2"
 }
