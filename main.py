@@ -33,7 +33,7 @@ connected = ''
 loggedIn = False
 
 restTime = int(configFile["restTime"]) * 60 + random.randint(1, 9)
-idleMovementTimer = int(configFile["idleMovementTimer"]) * 60 + random.randint(1, 9)
+idleMoveTimer = int(configFile["idleMoveTimer"]) * 60 + random.randint(1, 9)
 
 clearPrint("It's on baby!")
 
@@ -252,7 +252,7 @@ try:
         #     clearPrint('''LoggedIn: %r
         # Atividade Atual: %s
         # Proximo movimento de presença: %ds
-        # Fim do descanço em: %dm''' % (loggedIn, state,  idleMovementTimer - (datetime.datetime.now() - last_idle_move).seconds, (restTime - (datetime.datetime.now() - last_work).seconds)/ 60))
+        # Fim do descanço em: %dm''' % (loggedIn, state,  idleMoveTimer - (datetime.datetime.now() - last_idle_move).seconds, (restTime - (datetime.datetime.now() - last_work).seconds)/ 60))
 
         lastState = state
 
@@ -295,7 +295,7 @@ try:
         elif state == 'farming' and (datetime.datetime.now() - last_work).seconds > restTime:
             state = 'back_menu'
 
-        elif state == 'farming' and (datetime.datetime.now() - last_idle_move).seconds > idleMovementTimer:
+        elif state == 'farming' and (datetime.datetime.now() - last_idle_move).seconds > idleMoveTimer:
             state = 'idle_move'
 
         checkIfDisconnected()
