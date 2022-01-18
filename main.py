@@ -32,8 +32,8 @@ lastState = state
 connected = ''
 loggedIn = False
 
-restTime = 40 * 60 + random.randint(1, 9)
-idleMovementTimer = 4 * 60 + random.randint(1, 9)
+restTime = int(configFile["restTime"]) * 60 + random.randint(1, 9)
+idleMovementTimer = int(configFile["idleMovementTimer"]) * 60 + random.randint(1, 9)
 
 clearPrint("It's on baby!")
 
