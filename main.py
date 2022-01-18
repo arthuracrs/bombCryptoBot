@@ -4,7 +4,11 @@ import os
 import datetime
 import time
 import random
+import json
 
+
+configFile = json.load(open('./config.json'))
+assetsPath = configFile['assetsPath']
 
 def clearPrint(text):
     os.system('cls')
@@ -16,13 +20,11 @@ pyautogui.PAUSE = 1
 last_work = datetime.datetime.now()
 last_idle_move = datetime.datetime.now()
 
-directory = './logs'
-if not os.path.exists(directory):
-    os.makedirs(directory)
+logsPath = configFile['logsPath']
+if not os.path.exists(logsPath):
+    os.makedirs(logsPath)
 
 logs = []
-
-assetsPath = './assets_full_hd/'
 
 state = 'disconnected'
 lastState = state
@@ -225,7 +227,7 @@ def checkIfDisconnected():
 
 def saveLogs():
     logFile = open(
-    directory + "/log-"+datetime.datetime.now().strftime("%Y-%m-%d--%H.%M.%S")+".txt", "x")
+    logsPath + "/log-"+datetime.datetime.now().strftime("%Y-%m-%d--%H.%M.%S")+".txt", "x")
     for x in logs:
         logFile.write(x)
         logFile.write('\n')
