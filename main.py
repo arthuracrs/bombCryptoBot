@@ -22,14 +22,14 @@ if not os.path.exists(directory):
 
 logs = []
 
-assetsPath = './assets/'
+assetsPath = './assets_full_hd/'
 
 state = 'disconnected'
 lastState = state
 connected = ''
 loggedIn = False
 
-restTime = 1 * 60 + random.randint(1, 9)
+restTime = 40 * 60 + random.randint(1, 9)
 idleMovementTimer = 4 * 60 + random.randint(1, 9)
 
 clearPrint("It's on baby!")
