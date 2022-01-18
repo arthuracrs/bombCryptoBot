@@ -2,5 +2,6 @@
     "assetsPath": "./assets_full_hd/",
     "logsPath": "./logs",
     "restTime": "40",
-    "idleMoveTimer": "4"
+    "idleMoveTimer": "4",
+    "logMode": "debugs"
 }

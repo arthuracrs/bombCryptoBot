@@ -247,12 +247,12 @@ try:
         log = '%s ||    %s' % (
             datetime.datetime.now().strftime("%Y-%m-%d--%H:%M:%S"), state)
         if lastState != state:
-            print(log)
+            if configFile["logMode"] == 'debug':
+                print(log)
             logs.append(log)
-        #     clearPrint('''LoggedIn: %r
-        # Atividade Atual: %s
-        # Proximo movimento de presença: %ds
-        # Fim do descanço em: %dm''' % (loggedIn, state,  idleMoveTimer - (datetime.datetime.now() - last_idle_move).seconds, (restTime - (datetime.datetime.now() - last_work).seconds)/ 60))
+
+        if configFile["logMode"] != 'debug':
+            clearPrint('Atividade Atual: %s\nProximo movimento de presença: %ss\nFim do descanço em: %dm' % (state,  idleMoveTimer - (datetime.datetime.now() - last_idle_move).seconds, (restTime - (datetime.datetime.now() - last_work).seconds)/ 60))    
 
         lastState = state
 
