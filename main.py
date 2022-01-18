@@ -296,10 +296,9 @@ try:
             state = 'back_menu'
 
         elif state == 'farming' and (datetime.datetime.now() - last_idle_move).seconds > idleMoveTimer:
-            state = 'idle_move'
+            state = 'idle_move1'
 
         checkIfDisconnected()
-        # time.sleep(1)
 except:
     saveLogs()
 
