@@ -24,8 +24,7 @@ last_idle_move = datetime.datetime.now()
 logsPath = configFile['logsPath']
 if not os.path.exists(logsPath):
     os.makedirs(logsPath)
-
-logs = []
+logFilePath = logsPath + "/log-"+datetime.datetime.now().strftime("%Y-%m-%d--%H.%M.%S")+".txt"
 
 state = 'disconnected'
 lastState = state
@@ -235,8 +234,7 @@ def checkIfDisconnected():
 
 
 def saveLog(logText):
-    logFile = open(
-        logsPath + "/log-"+datetime.datetime.now().strftime("%Y-%m-%d--%H.%M.%S")+".txt", "x")
+    logFile = open(logFilePath, "w+")
     logFile.write(logText)
     logFile.write('\n')
     logFile.close()
