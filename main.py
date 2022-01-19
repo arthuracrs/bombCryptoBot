@@ -234,7 +234,7 @@ def checkIfDisconnected():
 
 
 def saveLog(logText):
-    logFile = open(logFilePath, "w+")
+    logFile = open(logFilePath, "a")
     logFile.write(logText)
     logFile.write('\n')
     logFile.close()
