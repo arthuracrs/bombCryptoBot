@@ -234,12 +234,11 @@ def checkIfDisconnected():
             state = 'to_re_asign'
 
 
-def saveLogs():
+def saveLog(logText):
     logFile = open(
         logsPath + "/log-"+datetime.datetime.now().strftime("%Y-%m-%d--%H.%M.%S")+".txt", "x")
-    for x in logs:
-        logFile.write(x)
-        logFile.write('\n')
+    logFile.write(logText)
+    logFile.write('\n')
     logFile.close()
 
 
@@ -250,7 +249,7 @@ try:
         if lastState != state:
             if configFile["logMode"] == 'debug':
                 print(log)
-            logs.append(log)
+            saveLog(log)
 
         if configFile["logMode"] != 'debug':
             clearPrint('Atividade Atual: %s\nProximo movimento de presença: %ss\nFim do descanço em: %dm e %ds' %
@@ -309,4 +308,3 @@ try:
 
 except Exception as e:
     print(e)
-    saveLogs()
