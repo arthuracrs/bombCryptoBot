@@ -208,18 +208,21 @@ def checkIfDisconnected():
     global state
     global loggedIn
 
-    if pyautogui.locateOnScreen(assetsPath + 'login_expired.png', confidence=0.8) != None:
-        ok_im1 = pyautogui.locateCenterOnScreen(
-            assetsPath + 'ok.png', confidence=0.8)
-        if ok_im1 != None:
-            customClick(ok_im1)
-            state = 'disconnected'
-
-        ok_im2 = pyautogui.locateCenterOnScreen(
-            assetsPath + 'ok2.png', confidence=0.8)
-        if ok_im2 != None:
-            customClick(ok_im2)
-            state = 'disconnected'
+    # if pyautogui.locateOnScreen(assetsPath + 'login_expired.png', confidence=0.8) != None:
+    ok_im1 = pyautogui.locateCenterOnScreen(
+        assetsPath + 'ok.png', confidence=0.8)
+    if ok_im1 != None:
+        customClick(ok_im1)
+        state = 'disconnected'
+        return
+    
+    ok_im2 = pyautogui.locateCenterOnScreen(
+        assetsPath + 'ok2.png', confidence=0.8)
+    
+    if ok_im2 != None:
+        customClick(ok_im2)
+        state = 'disconnected'
+    
     elif loggedIn:
         connect_wallet_02_im = pyautogui.locateCenterOnScreen(
             assetsPath + 'connect_wallet_02.png', confidence=0.8)
@@ -231,6 +234,7 @@ def checkIfDisconnected():
             pyautogui.click()
             time.sleep(10)
             state = 'to_re_asign'
+            return
 
 
 def saveLog(logText):
